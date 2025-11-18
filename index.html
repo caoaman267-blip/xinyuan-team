@@ -1,95 +1,81 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>强强联手｜中昊科技牵头组建中国企业出海数字化服务中心</title>
-  <style>
-    body {
-      font-family: "Microsoft YaHei", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f4f7fb;
-      color: #222;
-      line-height: 1.8;
-    }
-    header {
-      background: linear-gradient(135deg, #003399, #0077ff);
-      color: #fff;
-      text-align: center;
-      padding: 60px 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
-    header h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
-    header p {
-      font-size: 16px;
-      opacity: 0.9;
-    }
-    main {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 30px;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      animation: fadeIn 1.2s ease-in-out;
-    }
-    h2 {
-      color: #0044cc;
-      border-left: 5px solid #0077ff;
-      padding-left: 10px;
-      font-size: 20px;
-      margin-top: 40px;
-    }
-    .highlight {
-      color: #0056ff;
-      font-weight: bold;
-    }
-    footer {
-      text-align: center;
-      font-size: 14px;
-      padding: 30px;
-      color: #666;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>强强联手！中昊科技牵头组建“中国企业出海数字化服务中心”</h1>
-    <p>发布时间：2023年3月10日 ｜ 发稿机构：中国国际贸易促进委员会 / The Huffington Post</p>
-  </header>
+<!doctype html>
+modalTitle.textContent = '投入资金';
+amountInput.value = '';
+});
 
-  <main>
-    <p>【北京，2023年3月10日】——在构建“双循环”新发展格局的战略指引下，由中国国际贸易促进委员会（以下简称“中国贸促会”）牵头，<span class="highlight">香港中昊科技有限公司</span>作为主要技术承建与运营方的“中国企业出海数字化服务中心”（以下简称“中心”）今日正式揭牌成立。该中心旨在通过数字化手段，系统性解决中国品牌出海过程中面临的诸多挑战，为中国企业提供一站式、全链条的出海解决方案。</p>
 
-    <h2>官方背书，构筑国家级服务平台</h2>
-    <p>中心整合了中国贸促会在全球180多个国家和地区的贸易投资促进网络与中昊科技的尖端数字技术能力。商务部、工信部等相关部委代表出席揭牌仪式，标志着这一项目获得了国家层面的高度重视与政策支持。</p>
-    <p>“选择中昊科技作为核心合作伙伴，是基于其在全球跨境电商领域深厚的技术积累与成功的实战经验，”中国贸促会代表在致辞中表示，“我们相信，中心的成立将成为中国制造迈向中国品牌出海的‘加速器’。”</p>
+// 打开提现模态
+withdrawBtn.addEventListener('click',()=>{
+if(withdrawBtn.disabled) return;
+modal.classList.add('show');
+modalTitle.textContent = '提现';
+amountInput.value = '';
+});
 
-    <h2>四大核心模块，破解出海难题</h2>
-    <p>中心线上平台一期建设已完成，主要包含四大核心模块：</p>
-    <ul>
-      <li><b>“智策”全球市场洞察系统：</b> 利用AI大数据，为企业提供覆盖50个主要出口市场的实时政策、消费趋势与竞品分析报告。</li>
-      <li><b>“云桥”数字展厅：</b> 通过VR/AR技术，为企业搭建永不落幕的线上3D展厅，已成功举办20场线上“国别周”主题展。</li>
-      <li><b>“合规通”智能风控平台：</b> 内置全球主要市场超过10万条贸易法规数据，自动识别并预警合规风险，审核效率提升90%。</li>
-      <li><b>“金帆”跨境结算与金融支持：</b> 与多家政策性银行及商业金融机构合作，为企业提供基于区块链的快速结算和供应链金融服务。</li>
-    </ul>
 
-    <h2>成效初显，赋能千企出海</h2>
-    <p>试运营期间，中心已成功助力超过3,200家中国中小企业走向海外，涵盖智能制造、新能源、消费品等多个领域，累计促成意向成交额近80亿美元。</p>
-    <p>中昊科技董事长表示：“承建这一国家级平台，是荣誉更是责任。我们将不遗余力地投入技术资源，将中心打造成中国企业与世界市场之间最值得信赖的数字化桥梁。”</p>
-  </main>
+document.getElementById('modalCancel').addEventListener('click',()=>{modal.classList.remove('show')});
+document.getElementById('modalConfirm').addEventListener('click',()=>{
+const v = parseFloat(amountInput.value);
+if(!v || v<=0){alert('请输入有效金额');return}
+const s = JSON.parse(localStorage.getItem(storageKey));
+if(modalTitle.textContent==='投入资金'){
+s.balance += v; s.principal += v;
+s.history.push({type:'invest',amount:v,date:new Date().toLocaleString()});
+}else{
+// 提现
+if(v > s.balance){alert('余额不足');return}
+s.balance -= v;
+s.history.push({type:'withdraw',amount:v,date:new Date().toLocaleString()});
+}
+localStorage.setItem(storageKey, JSON.stringify(s));
+renderBalance();
+chartUpdateWithNewBalance(s.balance);
+modal.classList.remove('show');
+});
 
-  <footer>
-    © 2023 The Huffington Post ｜ 技术支持：ZHTCEP AI 智能引擎
-  </footer>
+
+// 简单历史查看（演示）
+document.getElementById('btnHistory').addEventListener('click',()=>{
+const s = JSON.parse(localStorage.getItem(storageKey));
+alert('最近操作：\n' + (s.history.slice(-5).reverse().map(i=> i.date + ' ' + i.type + ' ¥' + i.amount).join('\n') || '无'));
+});
+
+
+document.getElementById('btnPortfolio').addEventListener('click',()=>{
+alert('当前持仓（示意）:\n成长型 40%\n稳健型 35%\n对冲/现金 25%');
+});
+
+
+function chartUpdateWithNewBalance(newBal){
+const lastLabel = new Date();
+const lab = (lastLabel.getMonth()+1) + '/' + lastLabel.getDate();
+earnChart.data.labels.shift(); earnChart.data.labels.push(lab);
+earnChart.data.datasets[0].data.shift(); earnChart.data.datasets[0].data.push(newBal);
+earnChart.update();
+}
+
+
+// 页面初始化
+updateMarketStatus();
+renderBalance();
+
+
+// 模拟每日自动收益（前端演示，不是真实收益）
+setInterval(()=>{
+const s = JSON.parse(localStorage.getItem(storageKey));
+// 交易日才有收益
+const d = new Date();
+const wk = d.getDay();
+if(wk!==0 && wk!==6){
+const r = 1 + (Math.random()*0.0015 - 0.0002); // 小幅波动
+s.balance = parseFloat((s.balance * r).toFixed(2));
+localStorage.setItem(storageKey, JSON.stringify(s));
+renderBalance();
+chartUpdateWithNewBalance(s.balance);
+}
+}, 5000); // 每 5 秒模拟一次（演示）
+
+
+</script>
 </body>
 </html>
